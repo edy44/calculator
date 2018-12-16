@@ -29,7 +29,8 @@ class Evaluate:
         if position != -1:   
             number1 = expression[0:position]
             try:
-                self.result = float(number1) / 100
+                result = float(number1) / 100
+                self.result = self.clear_result(result)
             except:
                 self.error = True
                 return False
@@ -44,9 +45,10 @@ class Evaluate:
                 number1 = 0
             else:
                 number1 = expression[0:position]
-            number2 = expression[position+1:len(expression)]
+                number2 = expression[position+1:len(expression)]
             try:
-                self.result = float(number1) + float(number2)
+                result = float(number1) + float(number2)
+                self.result = self.clear_result(result)
             except:
                 self.error = True
                 return False
@@ -63,7 +65,8 @@ class Evaluate:
                 number1 = expression[0:position]
             number2 = expression[position+1:len(expression)]
             try:
-                self.result = float(number1) - float(number2)
+                result = float(number1) - float(number2)
+                self.result = self.clear_result(result)
             except:
                 self.error = True
                 return False
@@ -77,7 +80,8 @@ class Evaluate:
             number1 = expression[0:position]
             number2 = expression[position+1:len(expression)]
             try:
-                self.result = float(number1) * float(number2)
+                result = float(number1) * float(number2)
+                self.result = self.clear_result(result)
             except:
                 self.error = True
                 return False
@@ -90,11 +94,22 @@ class Evaluate:
         if position != -1:
             number1 = expression[0:position]
             number2 = expression[position+1:len(expression)]
+            if number2 == '0':
+                self.error = True
+                return False 
             try:
-                self.result = float(number1) / float(number2)
+                result = float(number1) / float(number2)
+                self.result = self.clear_result(result)
             except:
                 self.error = True
                 return False
             return True
         return False
+
+
+    def clear_result(self, result):
+        result = str(result)
+        if result[-2:] == '.0':
+            return result[:-2]
+        return result
 
